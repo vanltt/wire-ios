@@ -83,7 +83,7 @@ private struct InputBarConstants {
     private let inputBarVerticalInset : CGFloat = 34
 
 
-    public let textView = MarklightTextView()
+    public let textView = MarkdownTextView()
     public let leftAccessoryView  = UIView()
     public let rightAccessoryView = UIView()
     
@@ -170,7 +170,8 @@ private struct InputBarConstants {
         setupViews()
         createConstraints()
         
-        notificationCenter.addObserver(self, selector: #selector(textViewDidChangeSelection), name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: textView)
+        // FIXME: maybe better to observe directly within markdownView
+        notificationCenter.addObserver(self, selector: #selector(textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
@@ -192,12 +193,6 @@ private struct InputBarConstants {
         textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
-        
-        // we don't want large fonts in message text view
-        let headerFont = FontSpec(.normal, .medium).font!
-        textView.style.h1HeadingAttributes[NSFontAttributeName] = headerFont
-        textView.style.h2HeadingAttributes[NSFontAttributeName] = headerFont
-        textView.style.h3HeadingAttributes[NSFontAttributeName] = headerFont
         
         markdownView.delegate = textView
 
@@ -447,7 +442,6 @@ extension InputBar {
     func textViewTextDidChange(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
-        markdownView.updateIconsForModes(textView.markdownElementsForRange(nil))
     }
     
     func textViewDidBeginEditing(_ notification: Notification) {
@@ -460,8 +454,8 @@ extension InputBar {
         updateEditViewState()
     }
     
-    func textViewDidChangeSelection(_ notification: Notification) {
-        markdownView.updateIconsForModes(textView.markdownElementsForRange(nil))
+    func textViewDidChangeActiveMarkdown(_ notification: Notification) {
+        markdownView.updateIcons(for: textView.activeMarkdown)
     }
 }
 

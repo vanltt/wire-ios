@@ -105,7 +105,7 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
         messageTextView.keyboardAppearance = ColorScheme.default().keyboardAppearance
-        markdownBarView.delegate = messageTextView
+//        markdownBarView.delegate = messageTextView
     }
 
     private dynamic func backButtonPressed() {
@@ -288,7 +288,7 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
-        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
+//        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -305,7 +305,7 @@ extension MessageComposeViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
+//        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 }
 

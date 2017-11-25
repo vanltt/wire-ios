@@ -611,55 +611,55 @@ extension MarklightTextView {
 
 // MARK: - MarkdownBarViewDelegate
 
-extension MarklightTextView: MarkdownBarViewDelegate {
-    
-    public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
-        
-        switch type {
-        case .header, .numberList, .bulletList:  removeExistingPrefixSyntax()
-        default: break
-        }
-        
-        insertSyntaxForMarkdownElement(type: type)
-    }
-    
-    public func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectElementType type: MarkdownElementType, with sender: IconButton) {
-        deleteSyntaxForMarkdownElement(type: type)
-    }
-    
-    private func removeExistingPrefixSyntax() {
-        removeExistingHeader()
-        removeExistingListItem()
-    }
-    
-    private func removeExistingHeader() {
-        
-        var currentHeader: MarkdownElementType?
-        for header in [MarkdownElementType.header(.h1), .header(.h2), .header(.h3)] {
-            if isMarkdownElement(type: header, activeForSelection: selectedRange) {
-                currentHeader = header
-            }
-        }
-        
-        if let header = currentHeader {
-            deleteSyntaxForMarkdownElement(type: header)
-        }
-    }
-    
-    private func removeExistingListItem() {
-        
-        var currentListType: MarkdownElementType?
-        if isMarkdownElement(type: .numberList, activeForSelection: selectedRange) {
-            currentListType = .numberList
-        } else if isMarkdownElement(type: .bulletList, activeForSelection: selectedRange) {
-            currentListType = .bulletList
-        }
-        
-        if let type = currentListType {
-            deleteSyntaxForMarkdownElement(type: type)
-        }
-    }
-}
+//extension MarklightTextView: MarkdownBarViewDelegate {
+//
+//    public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
+//
+//        switch type {
+//        case .header, .numberList, .bulletList:  removeExistingPrefixSyntax()
+//        default: break
+//        }
+//
+//        insertSyntaxForMarkdownElement(type: type)
+//    }
+//
+//    public func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectElementType type: MarkdownElementType, with sender: IconButton) {
+//        deleteSyntaxForMarkdownElement(type: type)
+//    }
+//
+//    private func removeExistingPrefixSyntax() {
+//        removeExistingHeader()
+//        removeExistingListItem()
+//    }
+//
+//    private func removeExistingHeader() {
+//
+//        var currentHeader: MarkdownElementType?
+//        for header in [MarkdownElementType.header(.h1), .header(.h2), .header(.h3)] {
+//            if isMarkdownElement(type: header, activeForSelection: selectedRange) {
+//                currentHeader = header
+//            }
+//        }
+//
+//        if let header = currentHeader {
+//            deleteSyntaxForMarkdownElement(type: header)
+//        }
+//    }
+//
+//    private func removeExistingListItem() {
+//
+//        var currentListType: MarkdownElementType?
+//        if isMarkdownElement(type: .numberList, activeForSelection: selectedRange) {
+//            currentListType = .numberList
+//        } else if isMarkdownElement(type: .bulletList, activeForSelection: selectedRange) {
+//            currentListType = .bulletList
+//        }
+//
+//        if let type = currentListType {
+//            deleteSyntaxForMarkdownElement(type: type)
+//        }
+//    }
+//}
 
 extension String {
     
@@ -671,3 +671,4 @@ extension String {
         return (self as NSString).substring(with: range)
     }
 }
+    

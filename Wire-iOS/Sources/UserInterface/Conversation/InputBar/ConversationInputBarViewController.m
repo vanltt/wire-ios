@@ -454,7 +454,7 @@
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
     
-    NSString *trimmed = [self.inputBar.textView.preparedText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
@@ -571,7 +571,7 @@
 
 - (void)commandReturnPressed
 {
-    NSString *candidateText = self.inputBar.textView.preparedText;
+    NSString *candidateText = self.inputBar.textView.parsedText;
     if (nil != candidateText) {
         [self sendOrEditText:candidateText];
     }
@@ -818,17 +818,18 @@
     // markdown text view needs to detect newlines
     // in order to automatically insert new list items
     if ([text isEqualToString:@"\n"] || [text isEqualToString:@"\r"]) {
-        [self.inputBar.textView handleNewLine];
+//        [self.inputBar.textView handleNewLine];
     }
     
     // send only if send key pressed
     if (textView.returnKeyType == UIReturnKeySend && [text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
-        NSString *candidateText = self.inputBar.textView.preparedText;
+        NSString *candidateText = self.inputBar.textView.parsedText;
         [self sendOrEditText:candidateText];
         return NO;
     }
     
+    [self.inputBar.textView updateTypingAttributes];
     return YES;
 }
 
@@ -1038,8 +1039,7 @@
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    [self sendOrEditText:self.inputBar.textView.preparedText];
-    [self.inputBar.textView resetTypingAttributes];
+    [self sendOrEditText:self.inputBar.textView.parsedText];
 }
 
 @end
