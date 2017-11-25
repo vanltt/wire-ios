@@ -111,6 +111,14 @@ public class MarkdownTextView: NextResponderTextView {
         typingAttributes = self.style.attributes(for: activeMarkdown) as [String : Any]
     }
     
+    /// Resets the text view by emptying the string buffer & clearing the
+    /// active markdown.
+    ///
+    func reset() {
+        text = ""
+        activeMarkdown = .none
+    }
+    
 }
 
 // MARK: - Markdown Bar Delegate

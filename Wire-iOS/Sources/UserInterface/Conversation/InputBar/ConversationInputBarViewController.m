@@ -519,8 +519,7 @@
 
 - (void)clearInputBar
 {
-    self.inputBar.textView.text = @"";
-    [self.inputBar.markdownView resetIcons];
+    [self.inputBar.textView reset];
     [self updateRightAccessoryView];
     [self.conversation setIsTyping:NO];
 }
