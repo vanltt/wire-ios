@@ -170,8 +170,7 @@ private struct InputBarConstants {
         setupViews()
         createConstraints()
         
-        // FIXME: maybe better to observe directly within markdownView
-        notificationCenter.addObserver(self, selector: #selector(textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
+        notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
@@ -452,10 +451,6 @@ extension InputBar {
     func textViewDidEndEditing(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
-    }
-    
-    func textViewDidChangeActiveMarkdown(_ notification: Notification) {
-        markdownView.updateIcons(for: textView.activeMarkdown)
     }
 }
 
