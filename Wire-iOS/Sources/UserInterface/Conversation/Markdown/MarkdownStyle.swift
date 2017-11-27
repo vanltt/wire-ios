@@ -59,9 +59,10 @@ class MarkdownStyle: NSObject {
     
     static let inlineStyle: MarkdownStyle = {
         let defaultStyle = MarkdownStyle()
-        [defaultStyle.header1Attributes, defaultStyle.header2Attributes, defaultStyle.header3Attributes].forEach {
-            $0[NSFontAttributeName] = UIFont.boldSystemFont(ofSize: 16)
-        }
+        let headerFont = UIFont.boldSystemFont(ofSize: 16)
+        defaultStyle.header1Attributes[NSFontAttributeName] = headerFont
+        defaultStyle.header2Attributes[NSFontAttributeName] = headerFont
+        defaultStyle.header3Attributes[NSFontAttributeName] = headerFont
         return defaultStyle
     }()
     

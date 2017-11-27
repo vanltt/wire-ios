@@ -182,6 +182,7 @@ private struct InputBarConstants {
     }
     
     fileprivate func setupViews() {
+        textView.style = MarkdownStyle.inlineStyle
         textView.accessibilityIdentifier = "inputField"
         updatePlaceholder()
         textView.lineFragmentPadding = 0
