@@ -126,7 +126,8 @@ public class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
-        activeMarkdown.formUnion(markdown)
+        let combined = activeMarkdown.union(markdown)
+        activeMarkdown = combined.isValid ? combined : markdown
     }
     
     func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {

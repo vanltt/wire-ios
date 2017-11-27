@@ -26,18 +26,24 @@ struct Markdown: OptionSet, Hashable {
     
     // atomic options
     static let none     = Markdown(rawValue: 0)
-    static let header   = Markdown(rawValue: 1 << 0)
-    static let bold     = Markdown(rawValue: 1 << 1)
-    static let italic   = Markdown(rawValue: 1 << 2)
-    static let code     = Markdown(rawValue: 1 << 3)
+    static let header1  = Markdown(rawValue: 1 << 0)
+    static let header2  = Markdown(rawValue: 1 << 1)
+    static let header3  = Markdown(rawValue: 1 << 2)
+    static let bold     = Markdown(rawValue: 1 << 3)
+    static let italic   = Markdown(rawValue: 1 << 4)
+    static let code     = Markdown(rawValue: 1 << 5)
+    
     
     // combined options
     static let boldItalic:      Markdown = [.bold, .italic]
     
-    static let atomicValues:    [Markdown] = [.header, .bold, .italic, .code]
+    static let atomicValues:    [Markdown] = [.header1, .header2, .header3, .bold, .italic, .code]
     static let combinedValues:  [Markdown] = [.boldItalic]
     static let validValues:     [Markdown] = Markdown.atomicValues + Markdown.combinedValues
     
+    var isValid: Bool {
+        return Markdown.validValues.contains(self)
+    }
 }
 
 let MarkdownAttributeName = "markdownKey"
@@ -51,14 +57,30 @@ typealias Attributes = [String : Any]
 ///
 class MarkdownStyle: NSObject {
     
+//    static let inlineStyle: MarkdownStyle = {
+//        let defaultStyle = MarkdownStyle()
+//        defaultStyle.headerAttributes[NSFontAttributeName] = UIFont.boldSystemFont(ofSize: 16)
+//        return defaultStyle
+//    }()
+    
     var defaultAttributes: Attributes = [
         MarkdownAttributeName: Markdown.none,
         NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
         NSFontAttributeName: FontSpec(.normal, .none).font!,
     ]
     
-    var headerAttributes: Attributes = [
-        MarkdownAttributeName: Markdown.header,
+    var header1Attributes: Attributes = [
+        MarkdownAttributeName: Markdown.header1,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 28)
+    ]
+    
+    var header2Attributes: Attributes = [
+        MarkdownAttributeName: Markdown.header2,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 24)
+    ]
+    
+    var header3Attributes: Attributes = [
+        MarkdownAttributeName: Markdown.header3,
         NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)
     ]
     
@@ -86,7 +108,9 @@ class MarkdownStyle: NSObject {
     ///
     final func attributes(for markdown: Markdown) -> Attributes {
         switch markdown {
-        case .header:       return headerAttributes
+        case .header1:      return header1Attributes
+        case .header2:      return header2Attributes
+        case .header3:      return header3Attributes
         case .bold:         return boldAttributes
         case .italic:       return italicAttributes
         case .boldItalic:   return boldItalicAttributes

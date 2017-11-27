@@ -34,7 +34,9 @@ class MarkdownParser {
     ///
     private let syntaxMap: [Markdown : Syntax] = [
         .none:      Syntax(prefix: "", suffix: ""),
-        .header:    Syntax(prefix: "# ", suffix: "\n"),
+        .header1:   Syntax(prefix: "# ", suffix: "\n"),
+        .header2:   Syntax(prefix: "## ", suffix: "\n"),
+        .header3:   Syntax(prefix: "### ", suffix: "\n"),
         .bold:      Syntax(prefix: "**", suffix: "**"),
         .italic:    Syntax(prefix: "_", suffix: "_"),
         .code:      Syntax(prefix: "`", suffix: "`")

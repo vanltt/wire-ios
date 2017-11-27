@@ -44,8 +44,6 @@ public final class MarkdownBarView: UIView {
     public let codeButton           = IconButton()
     
     let buttons: [IconButton]
-//    public var activeModes = [MarkdownElementType]()
-    var activatedMarkdown: Markdown = .none
     
     required public init() {
         buttons = [headerButton, boldButton, italicButton, numberListButton, bulletListButton, codeButton]
@@ -93,12 +91,15 @@ public final class MarkdownBarView: UIView {
         headerButton.setupView()
     }
     
+    func textViewDidChangeActiveMarkdown(note: Notification) {
+        guard let textView = note.object as? MarkdownTextView else { return }
+        updateIcons(for: textView.activeMarkdown)
+    }
+    
     // MARK: Actions
     
     @objc private func buttonTapped(sender: IconButton) {
-        
-        let markdown = self.markdown(for: sender)
-        if markdown == .none { return }
+        guard let markdown = self.markdown(for: sender) else { return }
         
         if sender.iconColor(for: .normal) != normalColor {
             sender.setIconColor(normalColor, for: .normal)
@@ -108,34 +109,54 @@ public final class MarkdownBarView: UIView {
         }
     }
     
+    // MARK: - Conversions
+    
     private func buttonFor(_ markdown: Markdown) -> IconButton? {
         switch markdown {
-        case .header:       return headerButton
-        case .bold:         return boldButton
-        case .italic:       return italicButton
-        case .code:         return codeButton
-        default:            return nil
+        case .header1, .header2, .header3:  return headerButton
+        case .bold:                         return boldButton
+        case .italic:                       return italicButton
+        case .code:                         return codeButton
+        default:                            return nil
         }
     }
     
-    private func markdown(for button: IconButton) -> Markdown {
+    fileprivate func markdown(for button: IconButton) -> Markdown? {
         switch button {
-        case headerButton:  return .header
-        case boldButton:    return .bold
-        case italicButton:  return .italic
-        case codeButton:    return .code
-        default:            return .none
+        case headerButton:
+            switch headerButton.iconType(for: .normal) {
+            case .markdownH1:               return .header1
+            case .markdownH2:               return .header2
+            case .markdownH3:               return .header3
+            default:                        return nil
+            }
+        case boldButton:                    return .bold
+        case italicButton:                  return .italic
+        case codeButton:                    return .code
+        default:                            return nil
         }
+    }
+    
+    // MARKK - Updating Buttons
+    
+    @objc func resetIcons() {
+        buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
     }
     
     func updateIcons(for markdown: Markdown) {
         
+        // if header markdown, update header icon
+        if let icon = markdown.headerIcon() {
+            headerButton.setIcon(icon, with: .tiny, for: .normal)
+        }
+        
         for button in buttons {
-            let buttonMarkdown = self.markdown(for: button)
+            guard let buttonMarkdown = self.markdown(for: button) else { continue }
             
+            // current button not part of active markdown
             if markdown.isDisjoint(with: buttonMarkdown) {
                 button.setIconColor(normalColor, for: .normal)
-                button.isEnabled = Markdown.validValues.contains(markdown.union(buttonMarkdown))
+                button.isEnabled = markdown.union(buttonMarkdown).isValid
             }
             else {
                 button.setIconColor(accentColor, for: .normal)
@@ -147,10 +168,6 @@ public final class MarkdownBarView: UIView {
             }
         }
     }
-    
-    @objc func resetIcons() {
-        buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
-    }
 }
 
 extension MarkdownBarView: PopUpIconButtonDelegate {
@@ -158,7 +175,27 @@ extension MarkdownBarView: PopUpIconButtonDelegate {
     func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: ZetaIconType) {
         
         if button === headerButton {
-            delegate?.markdownBarView(self, didSelectMarkdown: .header, with: button)
+            let markdown: Markdown
+            switch icon {
+            case .markdownH1: markdown = .header1
+            case .markdownH2: markdown = .header2
+            case .markdownH3: markdown = .header3
+            default:          return
+            }
+            
+            delegate?.markdownBarView(self, didSelectMarkdown: markdown, with: button)
+        }
+    }
+}
+
+fileprivate extension Markdown {
+    
+    func headerIcon() -> ZetaIconType? {
+        switch self {
+        case .header1:  return .markdownH1
+        case .header2:  return .markdownH2
+        case .header3:  return .markdownH3
+        default:        return nil
         }
     }
 }
