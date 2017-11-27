@@ -33,13 +33,14 @@ class MarkdownParser {
     /// The mapping between markdown types and their corresponding syntax.
     ///
     private let syntaxMap: [Markdown : Syntax] = [
-        .none:      Syntax(prefix: "", suffix: ""),
-        .header1:   Syntax(prefix: "# ", suffix: ""),
-        .header2:   Syntax(prefix: "## ", suffix: ""),
-        .header3:   Syntax(prefix: "### ", suffix: ""),
-        .bold:      Syntax(prefix: "**", suffix: "**"),
-        .italic:    Syntax(prefix: "_", suffix: "_"),
-        .code:      Syntax(prefix: "`", suffix: "`")
+        .none:          Syntax(prefix: "", suffix: ""),
+        .header1:       Syntax(prefix: "# ", suffix: ""),
+        .header2:       Syntax(prefix: "## ", suffix: ""),
+        .header3:       Syntax(prefix: "### ", suffix: ""),
+        .bold:          Syntax(prefix: "**", suffix: "**"),
+        .italic:        Syntax(prefix: "_", suffix: "_"),
+        .boldItalic:    Syntax(prefix:"**_", suffix: "_**"),
+        .code:          Syntax(prefix: "`", suffix: "`"),
     ]
     
     /// Returns a string formatted with markdown syntax converted from the
