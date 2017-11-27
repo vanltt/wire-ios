@@ -57,11 +57,13 @@ typealias Attributes = [String : Any]
 ///
 class MarkdownStyle: NSObject {
     
-//    static let inlineStyle: MarkdownStyle = {
-//        let defaultStyle = MarkdownStyle()
-//        defaultStyle.headerAttributes[NSFontAttributeName] = UIFont.boldSystemFont(ofSize: 16)
-//        return defaultStyle
-//    }()
+    static let inlineStyle: MarkdownStyle = {
+        let defaultStyle = MarkdownStyle()
+        [defaultStyle.header1Attributes, defaultStyle.header2Attributes, defaultStyle.header3Attributes].forEach {
+            $0[NSFontAttributeName] = UIFont.boldSystemFont(ofSize: 16)
+        }
+        return defaultStyle
+    }()
     
     var defaultAttributes: Attributes = [
         MarkdownAttributeName: Markdown.none,
