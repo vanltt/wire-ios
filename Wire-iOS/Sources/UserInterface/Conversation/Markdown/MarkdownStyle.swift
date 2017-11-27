@@ -44,6 +44,10 @@ struct Markdown: OptionSet, Hashable {
     var isValid: Bool {
         return Markdown.validValues.contains(self)
     }
+    
+    var isHeader: Bool {
+        return [Markdown.header1, .header2, .header3].contains(self)
+    }
 }
 
 let MarkdownAttributeName = "markdownKey"

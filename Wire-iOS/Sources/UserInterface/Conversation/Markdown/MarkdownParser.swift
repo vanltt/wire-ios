@@ -34,9 +34,9 @@ class MarkdownParser {
     ///
     private let syntaxMap: [Markdown : Syntax] = [
         .none:      Syntax(prefix: "", suffix: ""),
-        .header1:   Syntax(prefix: "# ", suffix: "\n"),
-        .header2:   Syntax(prefix: "## ", suffix: "\n"),
-        .header3:   Syntax(prefix: "### ", suffix: "\n"),
+        .header1:   Syntax(prefix: "# ", suffix: ""),
+        .header2:   Syntax(prefix: "## ", suffix: ""),
+        .header3:   Syntax(prefix: "### ", suffix: ""),
         .bold:      Syntax(prefix: "**", suffix: "**"),
         .italic:    Syntax(prefix: "_", suffix: "_"),
         .code:      Syntax(prefix: "`", suffix: "`")
@@ -58,6 +58,10 @@ class MarkdownParser {
         
         let pop: () -> Void = {
             guard let last = stack.popLast() else { return }
+            
+            // TODO: need to check if it's a header, only insert newline if
+            // one doesn't already exist.
+            
             result += self.syntaxMap[last]?.suffix ?? ""
         }
         
