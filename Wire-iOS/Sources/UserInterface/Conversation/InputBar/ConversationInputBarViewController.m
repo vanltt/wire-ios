@@ -1041,7 +1041,7 @@
 
     if([self checkMessageLength]){
         [self sendOrEditText:self.inputBar.textView.parsedText];
-        [self.inputBar.textView resetTypingAttributes];
+        [self.inputBar.textView reset];
     }
 }
 
