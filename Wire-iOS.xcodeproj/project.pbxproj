@@ -915,6 +915,7 @@
 		EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A2CF1F628D1100958881 /* Settings+Account.swift */; };
 		EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */; };
 		EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */; };
+		EEE2306B1FCC77DF001F4E13 /* MarkdownStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE2306A1FCC77DF001F4E13 /* MarkdownStyleTests.swift */; };
 		EEE6310B1F7390D100E56803 /* ChatHeadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */; };
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
@@ -2408,6 +2409,7 @@
 		EEB8A2CF1F628D1100958881 /* Settings+Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Account.swift"; sourceTree = "<group>"; };
 		EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ImageType.swift"; sourceTree = "<group>"; };
 		EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSData_ImageTypeTests.swift; sourceTree = "<group>"; };
+		EEE2306A1FCC77DF001F4E13 /* MarkdownStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownStyleTests.swift; sourceTree = "<group>"; };
 		EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadsViewController.swift; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
@@ -4706,6 +4708,7 @@
 			children = (
 				EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */,
 				EF61B33E1FC8461200D8E631 /* AccessoryTextField */,
+				EEE230691FCC77C2001F4E13 /* Markdown */,
 				EE3A5B0C1F7A7BD400733045 /* ChatHeadTests.swift */,
 				EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */,
 				EE6067031F23BC33001CAC97 /* MarklightTextViewTests.swift */,
@@ -4966,6 +4969,14 @@
 				EE557C981FC615C1009B1B73 /* MarkdownTextView.swift */,
 				EE557C9A1FC615EA009B1B73 /* MarkdownStyle.swift */,
 				EE00DCCF1FC756B500EEB1C0 /* MarkdownParser.swift */,
+			);
+			path = Markdown;
+			sourceTree = "<group>";
+		};
+		EEE230691FCC77C2001F4E13 /* Markdown */ = {
+			isa = PBXGroup;
+			children = (
+				EEE2306A1FCC77DF001F4E13 /* MarkdownStyleTests.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -6591,6 +6602,7 @@
 				BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */,
 				BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */,
 				BF27AE4E1E9E513400809A2B /* MessageDraftTests.swift in Sources */,
+				EEE2306B1FCC77DF001F4E13 /* MarkdownStyleTests.swift in Sources */,
 				876376881E840E9C00B2CCF0 /* ConversationStatusTests.swift in Sources */,
 				87AAE4211E42441B00E1D13A /* FontSchemeTests.swift in Sources */,
 				8759DB851E6B696C000A832D /* ImageMessageViewTests.swift in Sources */,

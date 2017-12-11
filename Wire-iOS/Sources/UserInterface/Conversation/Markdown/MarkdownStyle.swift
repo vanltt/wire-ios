@@ -25,21 +25,38 @@ struct Markdown: OptionSet, Hashable {
     var hashValue: Int { return self.rawValue }
     
     // atomic options
-    static let none     = Markdown(rawValue: 0)
-    static let header1  = Markdown(rawValue: 1 << 0)
-    static let header2  = Markdown(rawValue: 1 << 1)
-    static let header3  = Markdown(rawValue: 1 << 2)
-    static let bold     = Markdown(rawValue: 1 << 3)
-    static let italic   = Markdown(rawValue: 1 << 4)
-    static let code     = Markdown(rawValue: 1 << 5)
     
+    static let none             = Markdown(rawValue: 0)
+    static let header1          = Markdown(rawValue: 1 << 0)
+    static let header2          = Markdown(rawValue: 1 << 1)
+    static let header3          = Markdown(rawValue: 1 << 2)
+    static let bold             = Markdown(rawValue: 1 << 3)
+    static let italic           = Markdown(rawValue: 1 << 4)
+    static let code             = Markdown(rawValue: 1 << 5)
+    static let list             = Markdown(rawValue: 1 << 6)
+    static let listPrefix       = Markdown(rawValue: 1 << 7)
     
     // combined options
-    static let boldItalic:      Markdown = [.bold, .italic]
     
-    static let atomicValues:    [Markdown] = [.header1, .header2, .header3, .bold, .italic, .code]
-    static let combinedValues:  [Markdown] = [.boldItalic]
-    static let validValues:     [Markdown] = Markdown.atomicValues + Markdown.combinedValues
+    static let boldItalic:      Markdown = [.bold, .italic]
+    static let listBold:        Markdown = [.list, .bold]
+    static let listItalic:      Markdown = [.list, .italic]
+    static let listBoldItalic:  Markdown = [.list, .boldItalic]
+    static let listCode:        Markdown = [.list, .code]
+    
+    // values
+    
+    static let atomicValues: [Markdown] = [
+        .header1, .header2, .header3, .bold, .italic, .code, .list, .listPrefix
+    ]
+    
+    static let combinedValues: [Markdown] = [
+        .boldItalic, .listBold, .listItalic, .listBoldItalic, .listCode
+    ]
+    
+    static let validValues: [Markdown] = Markdown.atomicValues + Markdown.combinedValues
+    
+    // helpers
     
     var isValid: Bool {
         return Markdown.validValues.contains(self)
@@ -47,6 +64,10 @@ struct Markdown: OptionSet, Hashable {
     
     var isHeader: Bool {
         return [Markdown.header1, .header2, .header3].contains(self)
+    }
+    
+    var isList: Bool {
+        return self.contains(.list)
     }
 }
 
@@ -111,6 +132,13 @@ class MarkdownStyle: NSObject {
         NSFontAttributeName: UIFont(name: "Menlo", size: 16)!
     ]
     
+    var listParagraphStyle: NSParagraphStyle = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.headIndent = 4.0
+        return paragraphStyle
+    }()
+    
+    
     /// Returns the attributes associated with the given markdown bitmask.
     ///
     final func attributes(for markdown: Markdown) -> Attributes {
@@ -122,8 +150,31 @@ class MarkdownStyle: NSObject {
         case .italic:       return italicAttributes
         case .boldItalic:   return boldItalicAttributes
         case .code:         return codeAttributes
+        case .list,
+             .listPrefix,
+             .listBold,
+             .listItalic,
+             .listBoldItalic,
+             .listCode:     return listAttributes(for: markdown) ?? defaultAttributes
         default:            return defaultAttributes
         }
+    }
+    
+    /// Returns the attributes for the given list markdown by first retrieving
+    /// the attributes for the markdown minus the list option, then adding the list
+    /// paragraph attribute. If the markdown doesn't contain the list option, then
+    /// nil is returned.
+    ///
+    private func listAttributes(for markdown: Markdown) -> Attributes? {
+        guard markdown.isValid, markdown.isList else { return nil }
+        
+        let nonListMarkdown = markdown.subtracting(.list)
+        
+        // update the attribtues
+        var attrs = attributes(for: nonListMarkdown)
+        attrs[MarkdownAttributeName] = markdown
+        attrs[NSParagraphStyleAttributeName] = listParagraphStyle
+        return attrs
     }
 }
 
