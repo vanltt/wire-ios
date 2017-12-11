@@ -1038,7 +1038,27 @@
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    [self sendOrEditText:self.inputBar.textView.parsedText];
+
+    if([self checkMessageLength]){
+        [self sendOrEditText:self.inputBar.textView.parsedText];
+        [self.inputBar.textView resetTypingAttributes];
+    }
+}
+
+-(BOOL)checkMessageLength{
+    
+    BOOL allowed = self.inputBar.textView.text.length <= (NSUInteger)SharedConstants.maximumMessageLength;
+    
+    if(!allowed) {
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"conversation.input_bar.message_too_long.message", nil), SharedConstants.maximumMessageLength];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"conversation.input_bar.message_too_long.title", nil)
+                                                                       message:message
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    return allowed;
 }
 
 @end

@@ -21,6 +21,12 @@
 
 #import "FormFlowViewController.h"
 
+typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
+    AuthenticationFlowRegular,
+    AuthenticationFlowOnlyLogin,
+    AuthenticationFlowOnlyRegistration
+};
+
 @class AnalyticsTracker, ZMIncompleteRegistrationUser, LoginCredentials;
 
 @interface RegistrationRootViewController : FormFlowViewController
@@ -28,8 +34,9 @@
 @property (nonatomic) BOOL hasSignInError;
 @property (nonatomic) BOOL showLogin;
 @property (nonatomic) LoginCredentials *loginCredentials;
+@property (nonatomic) BOOL shouldHideCancelButton;
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
+- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow;
 - (void)presentLoginTab;
 - (void)presentRegistrationTab;
 
