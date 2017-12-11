@@ -26,9 +26,21 @@ class MarkdownParser {
     
     typealias Syntax = (prefix: String, suffix: String)
     
-    /// The style used to apply markdown attributes
+    /// The style used to apply markdown attributes.
     ///
     var style = MarkdownStyle()
+    
+    /// The parser used to convert attributed strings to syntax strings.
+    ///
+    private lazy var attributeParser: MarkdownAttributeParser = {
+       return MarkdownAttributeParser(syntaxMap: self.syntaxMap)
+    }()
+    
+    /// The parser used to convert syntax strings to attributed strings.
+    ///
+    private lazy var syntaxParser: MarkdownSyntaxParser = {
+        return MarkdownSyntaxParser(syntaxMap: self.syntaxMap)
+    }()
     
     /// The mapping between markdown types and their corresponding syntax.
     ///
@@ -47,92 +59,12 @@ class MarkdownParser {
     /// given attributed string.
     ///
     func parse(attributedString: NSAttributedString) -> String {
-        
-        var stack = [Markdown]()
-        var result = ""
-        
-        let push: (Markdown, String) -> Void = { markdown, content in
-            stack.append(markdown)
-            result += self.syntaxMap[markdown]?.prefix ?? ""
-            result += content
-        }
-        
-        let pop: () -> Void = {
-            guard let last = stack.popLast() else { return }
-            
-            // TODO: need to check if it's a header, only insert newline if
-            // one doesn't already exist.
-            
-            result += self.syntaxMap[last]?.suffix ?? ""
-        }
-        
-        // Algorithm:
-        // 1. If stack is empty, push MD & append string. DONE
-        // 2. If current MD is exactly same as combined stack, append string. DONE
-        // 3. If current MD is disjoint from combined stack, pop, repeat.
-        // 4. Not disjoint. Calculate unique MD in current (compared to combined stack),
-        //      -> If no unique MD, pop, repeat.
-        //      -> else push unique. DONE
-        //
-        let process: (Markdown, String) -> Void = { markdown, contentString in
-            
-            var done = false
-            
-            while !done {
-                
-                guard !stack.isEmpty else {
-                    // 1
-                    push(markdown, contentString)
-                    return
-                }
-                
-                // combined MD in the stack
-                let combined = stack.reduce(Markdown.none) { return $0.union($1) }
-                
-                if markdown == combined {
-                    // 2
-                    result += contentString
-                    done = true
-                }
-                else if combined.isDisjoint(with: markdown) {
-                    // 3
-                    pop()
-                    continue
-                }
-                else {
-                    // 4
-                    let uniqueMarkdown = markdown.subtracting(combined)
-                    
-                    if uniqueMarkdown == .none {
-                        pop()
-                        continue
-                    }
-                    else {
-                        push(uniqueMarkdown, contentString)
-                        done = true
-                    }
-                }
-            }
-        }
-        
-        attributedString.enumerateAttribute(MarkdownAttributeName, in: NSMakeRange(0, attributedString.length), options: []) { (value, range, _) in
-            
-            let markdown = (value as? Markdown) ?? .none
-            let contentString =  attributedString.attributedSubstring(from: range).string
-            process(markdown, contentString)
-        }
-        
-        // add any remaining suffix syntax
-        while let markdown = stack.popLast() {
-            result += self.syntaxMap[markdown]?.suffix ?? ""
-        }
-        
-        return result
+        return attributeParser.parse(attributedString)
     }
     
-    /// Returns an attributed string constructed by the given markdown string.
+    /// Returns an attributed string constructed by the given syntax string.
     ///
-    func parse(markdownString: String) -> NSAttributedString {
-        return NSAttributedString(string: "")
+    func parse(syntaxString: String) -> NSAttributedString {
+        return syntaxParser.parse(syntaxString)
     }
 }

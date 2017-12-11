@@ -901,6 +901,8 @@
 		DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		EE00DCD01FC756B500EEB1C0 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE00DCCF1FC756B500EEB1C0 /* MarkdownParser.swift */; };
+		EE1F1E3E1FDE9EEF008A0131 /* MarkdownSyntaxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1F1E3D1FDE9EEF008A0131 /* MarkdownSyntaxParser.swift */; };
+		EE1F1E401FDE9EFD008A0131 /* MarkdownAttributeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1F1E3F1FDE9EFD008A0131 /* MarkdownAttributeParser.swift */; };
 		EE265E821F6FF4910087676B /* ChatHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE265E811F6FF4910087676B /* ChatHeadView.swift */; };
 		EE291BB51F0B9BF200142F31 /* Marklight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE291BB41F0B9BF200142F31 /* Marklight.framework */; };
 		EE291BB71F0BC54D00142F31 /* MarklightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */; };
@@ -2395,6 +2397,8 @@
 		EA7BBD361993890900DB5E50 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Magic.h"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.h"; sourceTree = SOURCE_ROOT; };
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
 		EE00DCCF1FC756B500EEB1C0 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
+		EE1F1E3D1FDE9EEF008A0131 /* MarkdownSyntaxParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownSyntaxParser.swift; sourceTree = "<group>"; };
+		EE1F1E3F1FDE9EFD008A0131 /* MarkdownAttributeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownAttributeParser.swift; sourceTree = "<group>"; };
 		EE265E811F6FF4910087676B /* ChatHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadView.swift; sourceTree = "<group>"; };
 		EE291BB41F0B9BF200142F31 /* Marklight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Marklight.framework; path = Carthage/Build/iOS/Marklight.framework; sourceTree = "<group>"; };
 		EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextView.swift; sourceTree = "<group>"; };
@@ -4969,6 +4973,8 @@
 				EE557C981FC615C1009B1B73 /* MarkdownTextView.swift */,
 				EE557C9A1FC615EA009B1B73 /* MarkdownStyle.swift */,
 				EE00DCCF1FC756B500EEB1C0 /* MarkdownParser.swift */,
+				EE1F1E3D1FDE9EEF008A0131 /* MarkdownSyntaxParser.swift */,
+				EE1F1E3F1FDE9EFD008A0131 /* MarkdownAttributeParser.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -6300,6 +6306,7 @@
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
 				EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */,
+				EE1F1E401FDE9EFD008A0131 /* MarkdownAttributeParser.swift in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
 				F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */,
@@ -6455,6 +6462,7 @@
 				8744489F1C22FCE500E7B947 /* Message+Formatting.m in Sources */,
 				166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */,
 				87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */,
+				EE1F1E3E1FDE9EEF008A0131 /* MarkdownSyntaxParser.swift in Sources */,
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
