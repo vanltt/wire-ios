@@ -38,7 +38,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsH1HeaderSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .header(.h1))
@@ -49,7 +49,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsH2HeaderSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .header(.h2))
@@ -60,7 +60,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsH3HeaderSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .header(.h3))
@@ -71,7 +71,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsItalicSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .italic)
@@ -82,7 +82,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsBoldSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .bold)
@@ -93,7 +93,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsCodeSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .code)
@@ -104,7 +104,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsNumberedListSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .numberList)
@@ -115,7 +115,7 @@ class MarklightTextViewTests: XCTestCase {
     
     func testThatItInsertsBulletListSyntax() {
         // given
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.insertSyntaxForMarkdownElement(type: .bulletList)
@@ -130,7 +130,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "# example"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .header(.h1))
@@ -143,7 +143,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "## example"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .header(.h2))
@@ -156,7 +156,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "### example"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .header(.h3))
@@ -169,7 +169,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "_example_"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .italic)
@@ -182,7 +182,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "**example**"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .bold)
@@ -195,7 +195,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "`example`"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .code)
@@ -208,7 +208,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "1. example"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .numberList)
@@ -221,7 +221,7 @@ class MarklightTextViewTests: XCTestCase {
         // given
         let text = "- example"
         sut.text = text
-        sut.selectedRange = NSMakeRange(0, text.characters.count)
+        sut.selectedRange = NSMakeRange(0, text.count)
         
         // when
         sut.deleteSyntaxForMarkdownElement(type: .bulletList)
