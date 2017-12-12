@@ -65,7 +65,8 @@ final class DateFormatterTests: XCTestCase {
         let day = calendar.component(.day, from: Date())
 
         // WHEN
-        let dateFormatter = date.localizedDateFormatter(locale: locale)
+        let dateFormatter = date.localizedDateFormatter()
+        dateFormatter.locale = locale
         let dateString = dateFormatter.string(from: date)
 
         // THEN
@@ -82,7 +83,8 @@ final class DateFormatterTests: XCTestCase {
         let nameOfMonth = monthDateFormatter.string(from: date)
 
         // WHEN
-        let dateFormatter = date.localizedDateFormatter(locale: locale)
+        let dateFormatter = date.localizedDateFormatter()
+        dateFormatter.locale = locale
         let dateString = dateFormatter.string(from: date)
 
         // THEN
@@ -98,7 +100,8 @@ final class DateFormatterTests: XCTestCase {
         let day = calendar.component(.day, from: Date())
 
         // WHEN
-        let dateFormatter = date.localizedDateFormatter(locale: locale)
+        let dateFormatter = date.localizedDateFormatter()
+        dateFormatter.locale = locale
         let dateString = dateFormatter.string(from: date)
 
         // THEN
