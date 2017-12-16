@@ -18,11 +18,32 @@
 
 class MarkdownSyntaxParser {
     
-    private let syntaxMap: [Markdown : MarkdownParser.Syntax]
+    var style: MarkdownStyle
     
-    init(syntaxMap: [Markdown : MarkdownParser.Syntax]) {
-        self.syntaxMap = syntaxMap
+    init(style: MarkdownStyle) {
+        self.style = style
     }
+    
+    private lazy var matchers: [Matcher] = {
+        var result = [Matcher]()
+        
+        var attrs = self.style.attributes(for: .header1)
+        result.append(Matcher(markdown: .header1, pattern: header1Pattern, options: .anchorsMatchLines, attributes: attrs))
+        
+        attrs = self.style.attributes(for: .header2)
+        result.append(Matcher(markdown: .header2, pattern: header2Pattern, options: .anchorsMatchLines, attributes: attrs))
+        
+        attrs = self.style.attributes(for: .header3)
+        result.append(Matcher(markdown: .header3, pattern: header3Pattern, options: .anchorsMatchLines, attributes: attrs))
+        
+        attrs = self.style.attributes(for: .bold)
+        result.append(Matcher(markdown: .bold, pattern: boldPattern, options: .dotMatchesLineSeparators, attributes: attrs))
+        
+        attrs = self.style.attributes(for: .italic)
+        result.append(Matcher(markdown: .italic, pattern: italicPattern, options: .dotMatchesLineSeparators, attributes: attrs))
+        
+        return result 
+    }()
     
     /// Returns an attributed string constructed by the given syntax string.
     ///
@@ -30,3 +51,27 @@ class MarkdownSyntaxParser {
         return NSAttributedString(string: "")
     }
 }
+
+private class Matcher {
+    
+    let markdown: Markdown
+    let regex: NSRegularExpression
+    let attributes: Attributes
+    
+    init(markdown: Markdown, pattern: String, options: NSRegularExpression.Options, attributes: Attributes) {
+        self.markdown = markdown
+        self.attributes = attributes
+        
+        do {
+            try self.regex = NSRegularExpression(pattern: pattern, options: options)
+        } catch let error {
+            fatal("Could not create Regular Expression: \(error.localizedDescription)")
+        }
+    }
+}
+
+private let header1Pattern = "(^\\#{1}[\\t ]+)(.*)$"
+private let header2Pattern = "(^\\#{2}[\\t ]+)(.*)$"
+private let header3Pattern = "(^\\#{3}[\\t ]+)(.*)$"
+private let boldPattern = "(\\*{2})(.+)(\\1)"
+private let italicPattern = "(\\_)(.+)(\\1)"
